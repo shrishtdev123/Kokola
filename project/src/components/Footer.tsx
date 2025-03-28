@@ -1,12 +1,10 @@
 import {
-  Facebook,
   Instagram,
   Linkedin,
   Mail,
   MapPin,
   Phone,
-  Twitter,
-  Youtube
+  Twitter
 } from 'lucide-react';
 
 const Footer = () => {
@@ -58,21 +56,21 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold text-white mb-4">Connect With Us</h3>
             <div className="flex space-x-4">
-              <a href="https://linkedin.com" className="hover:text-blue-400 transition-colors">
+              <a href="https://www.linkedin.com/company/ashna-ai/" className="hover:text-blue-400 transition-colors">
                 <Linkedin className="w-6 h-6" />
               </a>
-              <a href="https://twitter.com" className="hover:text-blue-400 transition-colors">
+              <a href="https://x.com/ashna_ai" className="hover:text-blue-400 transition-colors">
                 <Twitter className="w-6 h-6" />
               </a>
-              <a href="https://instagram.com" className="hover:text-blue-400 transition-colors">
+              <a href="https://www.instagram.com/ashna.ai/" className="hover:text-blue-400 transition-colors">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a href="https://facebook.com" className="hover:text-blue-400 transition-colors">
+              {/* <a href="https://facebook.com" className="hover:text-blue-400 transition-colors">
                 <Facebook className="w-6 h-6" />
               </a>
               <a href="https://youtube.com" className="hover:text-blue-400 transition-colors">
                 <Youtube className="w-6 h-6" />
-              </a>
+              </a> */}
             </div>
             <div className="mt-6">
               <h4 className="text-lg font-semibold text-white mb-2">Newsletter</h4>
