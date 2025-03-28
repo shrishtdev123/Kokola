@@ -1,86 +1,31 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import StepOne from './StepOne';
-import StepTwo from './StepTwo';
-import StepThree from './StepThree';
-import StepFour from './StepFour';
-import StepFive from './StepFive';
-import StepSix from './StepSix';
-import StepSeven from './StepSeven';
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-const formSchema = z.object({
-  // Step 1: Basic Personal Information
-  fullName: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().regex(/^\d{10}$/, 'Phone number must be 10 digits'),
-  gender: z.enum(['male', 'female', 'other']),
-  dateOfBirth: z.string(),
-  linkedinUrl: z.string().url().optional(),
+import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
+import StepThree from "./StepThree";
+import StepFour from "./StepFour";
+import StepFive from "./StepFive";
+import StepSix from "./StepSix";
+import StepSeven from "./StepSeven";
 
-  // Step 2: College & Academic Information
-  collegeName: z.string().min(2, 'College name is required'),
-  collegeLocation: z.string().min(2, 'College location is required'),
-  course: z.string(),
-  year: z.string(),
-  studentId: z.string().optional(),
-
-  // ... additional fields will be added for other steps
-});
-
-type FormData = z.infer<typeof formSchema>;
+const StepComponents: { [key: string]: React.FC } = {
+  "step-one": StepOne,
+  "step-two": StepTwo,
+  "step-three": StepThree,
+  "step-four": StepFour,
+  "step-five": StepFive,
+  "step-six": StepSix,
+  "step-seven": StepSeven,
+};
 
 const RegistrationForm = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 7;
+  const { step } = useParams();
+  const navigate = useNavigate();
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: '',
-      email: '',
-      phone: '',
-      gender: 'male',
-      dateOfBirth: '',
-      linkedinUrl: '',
-      collegeName: '',
-      collegeLocation: '',
-      course: '',
-      year: '',
-      studentId: '',
-    },
-  });
-
-  const nextStep = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
-  };
-
-  const prevStep = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 1));
-  };
-
-  const renderStep = () => {
-    switch (currentStep) {
-      case 1:
-        return <StepOne form={form} />;
-      case 2:
-        return <StepTwo form={form} />;
-      case 3:
-        return <StepThree form={form} />;
-      case 4:
-        return <StepFour form={form} />;
-      case 5:
-        return <StepFive form={form} />;
-      case 6:
-        return <StepSix form={form} />;
-      case 7:
-        return <StepSeven form={form} />;
-      default:
-        return null;
-    }
-  };
+  // Default to "step-one" if no step is found
+  const StepComponent = StepComponents[step || "step-one"];
 
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4">
@@ -94,43 +39,21 @@ const RegistrationForm = () => {
             Campus Ambassador Registration
           </h1>
 
-          {/* Progress bar */}
-          <div className="mb-8">
-            <div className="h-2 bg-gray-700 rounded-full">
-              <div
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-300"
-                style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-              />
-            </div>
-            <div className="mt-2 text-gray-400 text-sm text-center">
-              Step {currentStep} of {totalSteps}
-            </div>
+          {/* Navigation Buttons */}
+          <div className="flex justify-center gap-4 mb-6">
+            {Object.keys(StepComponents).map((step) => (
+              <button
+                key={step}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                onClick={() => navigate(`/register/${step}`)}
+              >
+                {step.replace("-", " ")}
+              </button>
+            ))}
           </div>
 
-          {/* Form steps */}
-          <form onSubmit={form.handleSubmit(console.log)}>
-            {renderStep()}
-
-            {/* Navigation buttons */}
-            <div className="flex justify-between mt-8">
-              {currentStep > 1 && (
-                <button
-                  type="button"
-                  onClick={prevStep}
-                  className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
-                >
-                  Previous
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={currentStep === totalSteps ? form.handleSubmit(console.log) : nextStep}
-                className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:opacity-90 transition-opacity ml-auto"
-              >
-                {currentStep === totalSteps ? 'Submit' : 'Next'}
-              </button>
-            </div>
-          </form>
+          {/* Render the selected step */}
+          <StepComponent />
         </motion.div>
       </div>
     </div>

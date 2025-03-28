@@ -1,26 +1,30 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Hero from './components/Hero';
-import Benefits from './components/Benefits';
-import Footer from './components/Footer';
-import RegistrationForm from './components/RegistrationForm';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Hero from "./components/Hero";
+import Benefits from "./components/Benefits";
+import Footer from "./components/Footer";
+import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div className="min-h-screen bg-gray-900">
         <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <Benefits />
-              <Footer />
-            </>
-          } />
-          <Route path="/register" element={<RegistrationForm />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <Benefits />
+                <Footer />
+              </>
+            }
+          />
+          {/* Register route with optional step parameter */}
+          <Route path="/register/:step?" element={<RegistrationForm />} />
         </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

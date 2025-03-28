@@ -1,53 +1,80 @@
-import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-interface StepTwoProps {
-  form: UseFormReturn<any>;
-}
+const StepTwo: React.FC = () => {
+  const [collegeName, setCollegeName] = useState('');
+  const [collegeLocation, setCollegeLocation] = useState('');
+  const [course, setCourse] = useState('');
+  const [year, setYear] = useState('');
+  const [studentId, setStudentId] = useState('');
+  const navigate=useNavigate();
+  const location = useLocation();
+ 
+  const {personalData}=location.state||{};
 
-const StepTwo: React.FC<StepTwoProps> = ({ form }) => {
-  const { register, formState: { errors } } = form;
+  const handlesecond=()=>{
+    
+     const Studentdata={
+
+            collegeName,
+            collegeLocation,
+            course,
+            year,
+            studentId
+     }
+    
+     
+
+      const combinedata={
+             personalData,
+             Studentdata
+      }
+      
+       console.log(combinedata);
+       
+    navigate(`/register/step-three`,{state:{combinedata}})
+  }
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-white mb-6">College & Academic Information</h2>
 
+      {/* College Name */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           College Name
         </label>
         <input
           type="text"
-          {...register('collegeName')}
+          value={collegeName}
+          onChange={(e) => setCollegeName(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your college name"
         />
-        {errors.collegeName && (
-          <p className="mt-1 text-sm text-red-400">{errors.collegeName.message as string}</p>
-        )}
       </div>
 
+      {/* College Location */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           College Location (City & State)
         </label>
         <input
           type="text"
-          {...register('collegeLocation')}
+          value={collegeLocation}
+          onChange={(e) => setCollegeLocation(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter college location"
         />
-        {errors.collegeLocation && (
-          <p className="mt-1 text-sm text-red-400">{errors.collegeLocation.message as string}</p>
-        )}
       </div>
 
+      {/* Current Course */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Current Course
         </label>
         <select
-          {...register('course')}
+          value={course}
+          onChange={(e) => setCourse(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Select your course</option>
@@ -56,17 +83,16 @@ const StepTwo: React.FC<StepTwoProps> = ({ form }) => {
           <option value="bba">BBA</option>
           <option value="other">Other</option>
         </select>
-        {errors.course && (
-          <p className="mt-1 text-sm text-red-400">{errors.course.message as string}</p>
-        )}
       </div>
 
+      {/* Current Year */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Current Year
         </label>
         <select
-          {...register('year')}
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Select your year</option>
@@ -75,25 +101,31 @@ const StepTwo: React.FC<StepTwoProps> = ({ form }) => {
           <option value="3">3rd Year</option>
           <option value="4">4th Year</option>
         </select>
-        {errors.year && (
-          <p className="mt-1 text-sm text-red-400">{errors.year.message as string}</p>
-        )}
       </div>
 
+      {/* Student ID */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Student ID (Optional)
         </label>
         <input
           type="text"
-          {...register('studentId')}
+          value={studentId}
+          onChange={(e) => setStudentId(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your student ID"
         />
-        {errors.studentId && (
-          <p className="mt-1 text-sm text-red-400">{errors.studentId.message as string}</p>
-        )}
       </div>
+
+      <div className="flex justify-center gap-4 mb-6">
+             <button
+              
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                onClick={handlesecond}
+              >
+                Next
+              </button>
+          </div>
     </div>
   );
 };

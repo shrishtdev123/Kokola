@@ -1,107 +1,121 @@
-import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface StepOneProps {
-  form: UseFormReturn<any>;
-}
+const StepOne: React.FC = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    gender: '',
+    dateOfBirth: '',
+    linkedinUrl: '',
+  });
 
-const StepOne: React.FC<StepOneProps> = ({ form }) => {
-  const { register, formState: { errors } } = form;
+   const navigate=useNavigate();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+   const handleclick=()=>{
+         console.log(formData);
+         navigate(`/register/step-two`,{state:{personalData:formData}})
+   }
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-white mb-6">Basic Personal Information</h2>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Full Name
-        </label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
         <input
           type="text"
-          {...register('fullName')}
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleInputChange}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your full name"
         />
-        {errors.fullName && (
-          <p className="mt-1 text-sm text-red-400">{errors.fullName.message as string}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Email ID (College Email Preferred)
-        </label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">Email ID (College Email Preferred)</label>
         <input
           type="email"
-          {...register('email')}
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your email"
         />
-        {errors.email && (
-          <p className="mt-1 text-sm text-red-400">{errors.email.message as string}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Phone Number
-        </label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
         <input
           type="tel"
-          {...register('phone')}
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your phone number"
         />
-        {errors.phone && (
-          <p className="mt-1 text-sm text-red-400">{errors.phone.message as string}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Gender
-        </label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">Gender</label>
         <select
-          {...register('gender')}
+          name="gender"
+          value={formData.gender}
+          onChange={handleInputChange}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
+          <option value="">Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="other">Other</option>
         </select>
-        {errors.gender && (
-          <p className="mt-1 text-sm text-red-400">{errors.gender.message as string}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          Date of Birth
-        </label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">Date of Birth</label>
         <input
           type="date"
-          {...register('dateOfBirth')}
+          name="dateOfBirth"
+          value={formData.dateOfBirth}
+          onChange={handleInputChange}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        {errors.dateOfBirth && (
-          <p className="mt-1 text-sm text-red-400">{errors.dateOfBirth.message as string}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          LinkedIn Profile URL (Optional)
-        </label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">LinkedIn Profile URL (Optional)</label>
         <input
           type="url"
-          {...register('linkedinUrl')}
+          name="linkedinUrl"
+          value={formData.linkedinUrl}
+          onChange={handleInputChange}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your LinkedIn profile URL"
         />
-        {errors.linkedinUrl && (
-          <p className="mt-1 text-sm text-red-400">{errors.linkedinUrl.message as string}</p>
-        )}
       </div>
+
+    
+      
+       
+      <div className="flex justify-center gap-4 mb-6">
+             <button
+              
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                onClick={handleclick}
+              >
+                Next
+              </button>
+          </div>
     </div>
   );
 };

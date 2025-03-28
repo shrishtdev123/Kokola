@@ -1,54 +1,81 @@
-import React from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-interface StepFiveProps {
-  form: UseFormReturn<any>;
-}
+const StepFive: React.FC = () => {
+  const [instagramUrl, setInstagramUrl] = useState('');
+  const [twitterUrl, setTwitterUrl] = useState('');
+  const [hasGroups, setHasGroups] = useState('no');
+  const [groupSize, setGroupSize] = useState('');
+  const navigate=useNavigate();
+ const location=useLocation();
+ const {fourthData}=location.state||{};
 
-const StepFive: React.FC<StepFiveProps> = ({ form }) => {
-  const { register, formState: { errors }, watch } = form;
-  const hasGroups = watch('hasGroups');
 
+
+
+  const handlefive=()=>{
+      
+      const SocialMeidadata={
+           instagramUrl,
+           twitterUrl,
+           hasGroups,
+           groupSize
+      }
+
+     const fifthData={
+      SocialMeidadata,
+      ExperianceData:fourthData.ExperianceData,
+      personalData:fourthData.personalData,
+      Studentdata:fourthData.Studentdata,
+      Promotiondata:fourthData.Promotiondata
+           
+     }
+
+     console.log(fifthData);
+     
+       
+    navigate(`/register/step-six`,{state:{fifthData}});
+  }
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-white mb-6">Social Media & Outreach</h2>
 
+      {/* Instagram Profile URL */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Instagram Profile URL
         </label>
         <input
           type="url"
-          {...register('instagramUrl')}
+          value={instagramUrl}
+          onChange={(e) => setInstagramUrl(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your Instagram profile URL"
         />
-        {errors.instagramUrl && (
-          <p className="mt-1 text-sm text-red-400">{errors.instagramUrl.message as string}</p>
-        )}
       </div>
 
+      {/* Twitter/X Profile URL */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Twitter/X Profile URL
         </label>
         <input
           type="url"
-          {...register('twitterUrl')}
+          value={twitterUrl}
+          onChange={(e) => setTwitterUrl(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter your Twitter/X profile URL"
         />
-        {errors.twitterUrl && (
-          <p className="mt-1 text-sm text-red-400">{errors.twitterUrl.message as string}</p>
-        )}
       </div>
 
+      {/* WhatsApp/Telegram Groups Question */}
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Do you manage or have access to any large student WhatsApp/Telegram groups?
         </label>
         <select
-          {...register('hasGroups')}
+          value={hasGroups}
+          onChange={(e) => setHasGroups(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="no">No</option>
@@ -56,13 +83,15 @@ const StepFive: React.FC<StepFiveProps> = ({ form }) => {
         </select>
       </div>
 
+      {/* Group Size Question (Shown Only If User Has Groups) */}
       {hasGroups === 'yes' && (
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">
             How many members are in those groups?
           </label>
           <select
-            {...register('groupSize')}
+            value={groupSize}
+            onChange={(e) => setGroupSize(e.target.value)}
             className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select range</option>
@@ -73,6 +102,16 @@ const StepFive: React.FC<StepFiveProps> = ({ form }) => {
           </select>
         </div>
       )}
+
+<div className="flex justify-center gap-4 mb-6">
+             <button
+              
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                onClick={handlefive}
+              >
+                Next
+              </button>
+          </div>
     </div>
   );
 };
