@@ -7,5 +7,6 @@ router.post("/adduser",userController.adduser);
 
 router.get("/getuser",userController.getuser);
 
+router.get("/getsingleuser",userController.getsingleuser);
 
 module.exports=router;

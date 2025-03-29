@@ -48,6 +48,12 @@ const userController={
                    massage:"some error is going on"
                 })
               }
+        },
+        getsingleuser:async(req,res)=>{
+
+              res.json({
+                  msg:"massage update successfully"
+              })
         }
 }
 
