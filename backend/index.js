@@ -49,10 +49,10 @@ app.get("/", async (req, res) => {
 
 // ❌ Do NOT use app.listen()
 // ✅ Export the app for Vercel
-// module.exports = app;
+ module.exports = app;
 
- const port=process.env.PORT|| 3400
-app.listen(port,()=>{
-      console.log("api is working here..");
+//  const port=process.env.PORT|| 3400
+// app.listen(port,()=>{
+//       console.log("api is working here..");
       
-})
+// })
