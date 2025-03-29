@@ -31,10 +31,12 @@ const userController={
 
 
               try {
+
+                  const data=await User.find({});
                 
                    res.json({
                      success:true,
-                     massage:"user data fetch"
+                      data
                    })
               } 
               catch (error) {

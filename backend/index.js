@@ -11,6 +11,10 @@ ConnetDB();
 app.use(cors());
 app.use(express.json());
 app.use("/api/user",userRouter)
+app.get("/",(req,res)=>{
+
+    res.send("API is working...")
+})
 app.listen(process.env. PORT,()=>{
     console.log("server is running");
     
