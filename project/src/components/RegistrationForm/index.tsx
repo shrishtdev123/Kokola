@@ -22,7 +22,7 @@ const StepComponents: { [key: string]: React.FC } = {
 
 const RegistrationForm = () => {
   const { step } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Default to "step-one" if no step is found
   const StepComponent = StepComponents[step || "step-one"];
