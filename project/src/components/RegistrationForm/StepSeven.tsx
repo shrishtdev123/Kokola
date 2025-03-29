@@ -10,7 +10,10 @@ const StepSeven: React.FC = () => {
 
   const location=useLocation();
   const {sixData}=location.state||{};
-
+  
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    
+     
   
    const handleseven=()=>{
 
@@ -39,7 +42,7 @@ const StepSeven: React.FC = () => {
       
       const sendData=async()=>{
 
-         const datasend=await axios.post("http://localhost:3400/api/user/adduser",data);
+         const datasend=await axios.post(backendUrl+"/api/user/adduser",data);
 
           console.log(datasend);
           
