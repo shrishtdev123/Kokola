@@ -3,7 +3,7 @@ require('dotenv').config();
 const express=require("express");
 const ConnetDB = require('./db');
 const userRouter=require("./route/userRouter");
-const cors=require("cors")
+const cors=require("cors");
  const app=express();
 
 // db is connected here
